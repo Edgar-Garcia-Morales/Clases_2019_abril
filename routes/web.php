@@ -14,3 +14,29 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/saludar_entrada', function (){
+	echo "hola";
+}
+);
+
+Route::get('/saludar_salida', function (){
+	echo "adios";
+}
+);
+
+Route::get('/saluda', 'Controlador@saludar');
+Route::get('/despide', 'Controlador@despedir' );
+
+Route::get('/saluda_ingles', 'Controlador@saludar_ingles');
+Route::get('/despide_ingles', 'Controlador@despedir_ingles' );
+
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/saluda_italiano', 'Controlador@saludar_italiano');
+Route::get('/despide_italiano', 'Controlador@despedir_italiano' );
+
+Route::get('/carro_agregar', 'CarroController@agregar');
+
+
