@@ -38,5 +38,7 @@ Route::get('/saluda_italiano', 'Controlador@saludar_italiano');
 Route::get('/despide_italiano', 'Controlador@despedir_italiano' );
 
 Route::get('/carro_agregar', 'CarroController@agregar');
-
-
+Route::post('/destino', 'CarroController@procesar');
+Route::get('/eliminar/{id}', 'CarroController@eliminar');
+Route::get('/modificar/{id}', 'CarroController@modificar');
+Route::post('/destino2', 'CarroController@procesar2');

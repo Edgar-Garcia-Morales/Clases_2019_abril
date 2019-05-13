@@ -13,12 +13,16 @@
 		<th>{{$carro->marca}}</th>
 		<th>{{$carro->modelo}}</th>
 		<th>{{$carro->linea}}</th>
-		<th></th>
+		<th>
+			<a href="/eliminar/{{$carro->id}}">x</a>
+			<a href="/modificar/{{$carro->id}}">m</a>
+		</th>
 	</tbody>
 @endforeach
 </table>
 <br>
-<form method="POST" action="siete.php">
+<form method="POST" action="/destino">
+	@csrf
 	<input type="text" name="marca">
 	<input type="text" name="modelo">
 	<input type="text" name="linea">
