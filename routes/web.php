@@ -42,3 +42,10 @@ Route::post('/destino', 'CarroController@procesar');
 Route::get('/eliminar/{id}', 'CarroController@eliminar');
 Route::get('/modificar/{id}', 'CarroController@modificar');
 Route::post('/destino2', 'CarroController@procesar2');
+
+
+Route::get('/clientes', 'ClientesController@listar');
+Route::post('/destino2', 'ClientesController@agregar');
+Route::get('/eliminarcliente/{id}', 'ClientesController@eliminar');
+Route::post('/actualiza_nombre', 'ClientesController@actualiza_nombre');
+

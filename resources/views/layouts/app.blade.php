@@ -60,17 +60,16 @@
       <li class="nav-item" id="despedir_italiano">
         <a class="nav-link" href="/despide_italiano">Despedir Italiano</a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <li class="nav-item " id="carro_agregar" >
+        <a class="nav-link " href="/carro_agregar" >
           Carros
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" id="carro_agregar" href="/carro_agregar">Agregar</a>
-          <a class="dropdown-item" id="carro_editar" href="#">Editar</a>
-          <a class="dropdown-item" id="carro_eliminar" href="#">Eliminar</a>
-        </div>
-      </li>      
-
+      </li>
+      <li class="nav-item " id="opc_clientes" >
+        <a class="nav-link " href="/clientes" >
+          Clientes
+        </a>
+      </li>
                                   <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
