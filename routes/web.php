@@ -49,3 +49,11 @@ Route::post('/destino2', 'ClientesController@agregar');
 Route::get('/eliminarcliente/{id}', 'ClientesController@eliminar');
 Route::post('/actualiza_nombre', 'ClientesController@actualiza_nombre');
 
+
+Route::get('/eventos', 'EventosController@listar');
+Route::post('/destino3', 'EventosController@agregar');
+
+
+
+
+
