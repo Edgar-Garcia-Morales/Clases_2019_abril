@@ -104,6 +104,10 @@
 //				  $( "#formulario" ).submit();
 				});
 
+//cambio
+
+
+
 				$("table#eventos>tbody").on("click","a",function(event) {
 					id = this.id;
 					tk = $('input[name=_token]').val();
