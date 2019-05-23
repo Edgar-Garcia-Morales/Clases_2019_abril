@@ -52,6 +52,8 @@ Route::post('/actualiza_nombre', 'ClientesController@actualiza_nombre');
 
 Route::get('/eventos', 'EventosController@listar');
 Route::post('/destino3', 'EventosController@agregar');
+Route::post('/agregar_evento', 'EventosController@agregar_ajax');
+Route::post('/eliminarevento', 'EventosController@eliminar_ajax');
 
 
 

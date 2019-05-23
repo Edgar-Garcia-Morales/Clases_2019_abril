@@ -23,15 +23,24 @@ class ClientesController extends Controller{
 		return redirect('/clientes');
 	}
 	function eliminar($id){
-		$seleccionado = Cliente::find($id);
-		$seleccionado->delete();
-		return redirect('/clientes');
+		try {
+			$seleccionado = Cliente::find($id);
+			$seleccionado->delete();
+			return redirect('/clientes');
+		} catch (\Exception $e) {
+            
+            $error = $e->getMessage();
+            $num   = $e->getCode();
+            if ($num == 23000) 
+            	return redirect('/clientes')->with('error', 'Ese cliente esta en uso');
+            else
+            	return redirect('/clientes')->with('error', "Ha ocurrido un error con el codigo: " . $num );
+
+    }
 	}
 
 function actualiza_nombre(Request $datos)
 	{
-		$_POST = $datos->toArray();
-
 		$_POST = $datos->toArray();
 		$nuevo = Cliente::find($_POST["id"]);
 		$nuevo->nombre=$_POST["nombre"];

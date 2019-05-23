@@ -7,7 +7,7 @@
   Agregar
 </button>
 
-<table id="clientes" border=1>
+<table id="eventos" border=1>
 	<thead>
 		<th>Fecha</th>
 		<th>Tipo</th>
@@ -17,11 +17,11 @@
 	<tbody>
 @foreach ($Eventos as $Evento)
 	<tr id="{{$Evento->id}}">
-		<td class="nombre" id="{{$Evento->id}}">{{$Evento->fecha}}</td>
-		<td class="correo" id="{{$Evento->id}}">{{$Evento->tipo}}</td>
-		<td class="telefono" id="{{$Evento->id}}">{{$Evento->quien->nombre}}</td>
+		<td class="fecha" id="{{$Evento->id}}">{{$Evento->fecha}}</td>
+		<td class="tipo" id="{{$Evento->id}}">{{$Evento->tipo}}</td>
+		<td class="cliente_id" id="{{$Evento->id}}">{{$Evento->quien->nombre}}</td>
 		<td>
-			<a href="/eliminarcliente/{{$Evento->id}}">x</a>
+			<a id="{{$Evento->id}}">x</a>
 		</td>
 	</tr>
 @endforeach
@@ -44,9 +44,9 @@
       <div class="modal-body">
 			<form id="formulario" method="POST" action="/destino3">
 				@csrf
-				Fecha:<input type="date" name="fecha"><br>
+				Fecha:<input type="date" name="fecha" id="fecha"><br>
 				Tipo:
-<select name="tipo">
+<select name="tipo" id="tipo" >
 	<option>Cumpleaños</option>
 	<option>Boda</option>
 	<option>XV años</option>
@@ -54,7 +54,7 @@
 </select>
 <br>
 				Cliente:
-<select name="cliente_id">
+<select name="cliente_id" id="cliente_id">
 @foreach ($Clientes as $Cliente)
 <option value="{{$Cliente->id}}">{{$Cliente->nombre}}</option>
 @endforeach
@@ -78,32 +78,46 @@
         $("#opc_eventos").addClass("active");
 
 				$( "#btnagregar" ).click(function() {
-				  $( "#formulario" ).submit();
-				});
+						
+						fecha = $("#fecha").val();
+						tipo =  $("#tipo").val();
+						cliente_id =  $("#cliente_id").val();
+						tk = $('input[name=_token]').val();
 
-				$( "td.nombre" ).dblclick(function() {
-					$(this).html('<input class="txtnombre" type="text" id="' + this.id  + '">');
-//				  alert( "Doble Click en el nombre." );
-				});
-
-
-				$("table#clientes>tbody").on("focusout",".txtnombre",function() {
-					id = this.id;
-					nombre = this.value;
-					td = this.parentElement;
-					tk = $('input[name=_token]').val();
-					$(td).html("");
 					$.ajax({
-				    url: "/actualiza_nombre/",
+				    url: "/agregar_evento/",
 					  type: "POST",
 					  dataType: "json",
-					  data: { "id": id , "nombre": nombre , "_token":tk },
+					  data: { "fecha": fecha , "tipo": tipo , "cliente_id": cliente_id , "_token":tk },
 					  success: function(result){
-					  	$("table#clientes>tbody>tr#" + result.id + ">td.nombre").html(result.nombre);
+					  	fila = 	'<tr id="'+ result.nuevo.id +'">';
+							fila += 	'<td class="fecha" id="'+ result.nuevo.id +'">'+ result.nuevo.fecha +'</td>';
+							fila += 	'<td class="tipo" id="'+ result.nuevo.id +'">'+ result.nuevo.tipo +'</td>';
+							fila += 	'<td class="cliente_id" id="'+ result.nuevo.id +'">'+ result.nombre +'</td>';
+							fila += 	'<td>';
+							fila += 	'<a id="'+ result.nuevo.id +'">x</a>';
+							fila += 	'</td></tr>';
+//					  	$("table#clientes>tbody").append(fila);
+					  	$("table#eventos>tbody").append(fila);
+  					}
+					});
+//				  $( "#formulario" ).submit();
+				});
+
+				$("table#eventos>tbody").on("click","a",function(event) {
+					id = this.id;
+					tk = $('input[name=_token]').val();
+					$.ajax({
+				    url: "/eliminarevento/",
+					  type: "POST",
+					  dataType: "json",
+					  data: { "id": id , "_token":tk },
+					  success: function(result){
+					  	$("table#eventos>tbody>tr#" + result.eliminado.id).remove(); 
   					}
 					});
 				});
+				event.preventDefault();
     });
-
 </script>
 @endsection

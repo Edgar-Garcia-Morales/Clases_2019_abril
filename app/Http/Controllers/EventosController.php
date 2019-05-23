@@ -17,16 +17,47 @@ class EventosController extends Controller{
 	function agregar(Request $datos)
 	{
 		$_POST = $datos->toArray();
-		var_dump($_POST);
 		$nuevo = new Evento();
 		$nuevo->fill($_POST);
 		$nuevo->save();
 		return redirect('/eventos');
 	}
+
+
+	function agregar_ajax(Request $datos)
+	{
+		$_POST = $datos->toArray();
+		$nuevo = new Evento();
+		$nuevo->fill($_POST);
+		$nuevo->save();
+
+
+		return response()->json( array( 'nuevo' => $nuevo, 'nombre' => $nuevo->quien->nombre) );
+	}
+
 	function eliminar($id){
-		$seleccionado = Cliente::find($id);
+		$seleccionado = Evento::find($id);
 		$seleccionado->delete();
 		return redirect('/clientes');
+	}
+
+	function eliminar_ajax(Request $datos){
+		$_POST = $datos->toArray();
+
+		try {
+			$seleccionado = Evento::find($_POST['id']);
+			$seleccionado->delete();
+			return response()->json( array('error'=>false, 'eliminado' => $seleccionado, 'nombre' => $seleccionado->quien->nombre) );
+
+		} catch (\Exception $e) {
+            
+            $error = $e->getMessage();
+            $num   = $e->getCode();
+            if ($num == 23000) 
+            			return response()->json( array( 'error'=>true, 'numero' => $num, 'mensaje' => 'Ese cliente esta en uso') );
+            else
+            			return response()->json( array( 'error'=>true, 'numero' => $num, 'mensaje' => $error) );
+    }
 	}
 
 function actualiza_nombre(Request $datos)
